@@ -1,0 +1,303 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{lmodern}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Collaborative Study Platform - Project Proposal},
+}
+
+\title{\textbf{Collaborative Study Platform}\\ \large Project Proposal for UCS503}
+\author{\textbf{Submitted to:} Ms. Nisha Thakur, Thapar Institute of Engineering and Technology \\\\
+\textbf{Team Members:} \\ Shashvt (1024170449) \quad|\quad Anirudh Sharma (1024170430) \quad|\quad Lavish (1024170441)}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\hrule
+\vspace{1em}
+
+\section{Higher-order Goal / Secondary Framing}
+This project aims to improve collaborative and resource-driven learning among college students by reducing the time and effort required to find, organize, share, and access academic study material.
+
+While students commonly rely on disconnected sources such as messaging groups, cloud drives, social-media communities, and personal collections for notes, books, and previous-year questions, the immediate engineering objective is to consolidate these activities into a single, structured, deployable web platform.
+
+The platform focuses on making academic resources easier to discover while enabling students to contribute resources and participate in collaborative study activities.
+
+\section{Time-to-Value / Primary Heuristic}
+We will deliver meaningful increments quickly by first stabilizing the core student workflow: authentication, resource discovery, resource upload, and access to study materials.
+
+We will prioritize rapid feedback over unnecessary complexity by implementing the platform in incremental iterations and validating each major workflow through actual usage.
+
+Existing mature technologies and services will be used rather than developing infrastructure from scratch.
+
+The initial implementation will focus on correctness of the core workflows before introducing advanced capabilities such as recommendation systems, analytics, or AI-assisted learning.
+
+Success is defined by what can be delivered and measured in the first iteration, followed by improvements based on student feedback and observed usage.
+
+\section{Problem Statement}
+College students frequently need to access academic resources such as lecture notes, books, previous-year questions, and other study material. However, these resources are often distributed across multiple disconnected platforms.
+
+Common pain points include:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Fragmentation:} Study material is distributed across WhatsApp groups, Telegram groups, Google Drive links, personal folders, and other sources, making resources difficult to locate.
+    \item \textbf{Poor organization:} Students may have difficulty finding material according to academic year, stream, subject, or subject code.
+    \item \textbf{Limited discoverability:} Useful notes or previous-year questions may exist within a student community but remain difficult for other students to discover.
+    \item \textbf{Repeated sharing:} The same files are frequently shared multiple times across different groups, resulting in unnecessary duplication.
+    \item \textbf{Lack of structured contribution:} Students who possess useful notes, books, or PYQs do not always have a centralized platform through which they can contribute them.
+    \item \textbf{Limited collaboration:} Conventional LMS platforms generally focus on teacher-to-student content delivery rather than student-to-student resource sharing and study collaboration.
+    \item \textbf{Resource accessibility:} Large academic files require appropriate storage and delivery infrastructure rather than being permanently stored inside the application itself.
+\end{itemize}
+
+\textbf{Why this matters now:} Students increasingly depend on digital academic resources, and a centralized platform can reduce the time spent searching for material while encouraging students to contribute resources to a shared academic community.
+
+\section{Proposed Solution \dots Software Proposition}
+
+\subsection{Overview}
+Build a web-based \textbf{Collaborative Study Platform} with the following components:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Student authentication:} Users can create accounts and sign in to access platform features.
+    \item \textbf{Notes repository:} Students can upload and access academic notes organized using information such as year, stream, and subject code.
+    \item \textbf{Books repository:} Reference books and other academic resources can be uploaded and accessed through the platform.
+    \item \textbf{PYQ repository:} Previous-year question papers can be organized and shared for examination preparation.
+    \item \textbf{Class creation and participation:} Students can create or join classes/study groups to facilitate collaborative learning.
+    \item \textbf{Resource categorization:} Academic resources are associated with relevant metadata such as academic year, stream, subject code, and resource type.
+    \item \textbf{File storage:} Uploaded files can be stored using cloud object storage rather than relying entirely on local application storage.
+    \item \textbf{Backend API:} A Go-based backend manages authentication, resource operations, database interactions, and file-upload workflows.
+    \item \textbf{Database:} PostgreSQL stores structured application data including users and academic resource metadata.
+    \item \textbf{Frontend interface:} A React-based frontend provides the user-facing interface for authentication, resource discovery, classes, and uploads.
+\end{itemize}
+
+\subsection{Core Workflow}
+\begin{enumerate}[leftmargin=*]
+    \item A student creates an account or signs into the platform.
+    \item The authenticated student accesses the study platform and selects the required resource category such as Notes, Books, or PYQs.
+    \item The student selects relevant academic information such as year, stream, and subject.
+    \item The system communicates with the backend API to retrieve matching resources from the database.
+    \item A student who wants to contribute material provides the required metadata and selects the file for upload.
+    \item The backend validates the request and stores the resource metadata in PostgreSQL while the file can be stored using cloud object storage.
+    \item The uploaded resource can pass through the application's resource-status workflow before becoming available for general access.
+    \item Other students can subsequently discover and access the resource through the appropriate section of the platform.
+    \item Students can additionally create or join classes to support collaborative study activities.
+\end{enumerate}
+
+\subsection{Operational Constraints for an Educational Setting}
+\begin{itemize}[leftmargin=*]
+    \item Keep the platform usable on low-to-mid-range devices through responsive web design.
+    \item Avoid unnecessary dependence on advanced research algorithms in the initial version; focus on workflow correctness, usability, security, and reliable resource management.
+    \item Use mature technologies such as React, Go, PostgreSQL, and cloud object storage rather than developing custom infrastructure.
+    \item Keep academic resource metadata structured so that searching and filtering can be improved as the platform grows.
+    \item Ensure that authentication is required for protected operations.
+    \item Store large files externally through object storage where appropriate rather than making the application server responsible for permanently storing all uploaded content.
+\end{itemize}
+
+\section{Solution Approach \dots Engineering Focus}
+This is an engineering course project, so the primary focus is on building a reliable collaborative academic-resource platform rather than proposing novel research algorithms.
+
+The system combines a responsive frontend, REST-style backend services, relational database storage, authentication, and cloud-based file storage.
+
+\subsection{Resource Organization \dots Structured Academic Access}
+Academic resources will be organized using metadata such as:
+\begin{itemize}[leftmargin=*]
+    \item Academic year
+    \item Stream
+    \item Subject code
+    \item Resource category
+    \item File name
+    \item Upload information
+    \item Resource status
+\end{itemize}
+
+This organization allows the platform to retrieve relevant resources based on the student's academic requirements.
+
+\textbf{Example Parameter Mapping:}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Year:} 3
+    \item \textbf{Stream:} Computer Science
+    \item \textbf{Subject Code:} UML501
+    \item \textbf{Resource Type:} Notes
+\end{itemize}
+
+The system can then retrieve resources corresponding to these parameters rather than requiring students to manually search through unrelated files.
+
+\subsection{Web Architecture \dots Web-based Solution}
+A typical 3-tier web architecture will be used:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Frontend:} React-based responsive user interface for authentication, resource browsing, resource uploads, class participation, and other student interactions.
+    \item \textbf{Backend API:} Go-based backend responsible for authentication, authorization, resource operations, database communication, and file-upload workflows.
+    \item \textbf{Database:} PostgreSQL stores users, resource metadata, class-related information, and other structured application data.
+    \item \textbf{Object Storage:} Cloud object storage such as AWS S3 is used for uploaded academic files where required.
+\end{itemize}
+
+The architecture separates frontend, backend, database, and file-storage responsibilities, allowing individual components to be developed and scaled independently.
+
+\subsection{Fast Delivery and Deployment Enabler}
+The project will use incremental development to reduce release friction.
+
+Development will prioritize:
+\begin{itemize}[leftmargin=*]
+    \item Running and validating the frontend independently.
+    \item Running and validating the backend independently.
+    \item Testing API communication between frontend and backend.
+    \item Testing database operations.
+    \item Testing file-upload functionality.
+    \item Verifying authentication and protected routes.
+    \item Maintaining a Git-based version history.
+\end{itemize}
+
+A stable version of the project will be maintained before major feature modifications so that experimental changes can be isolated from the working version.
+
+\section{Evaluation Criterion \dots Measurable and Attributable}
+The success of the platform will be evaluated using measurable criteria connected to the core student workflow.
+
+\subsection{Primary Evaluation Metric}
+\textbf{Time-to-resource-access (TRA):} The time required for a student to locate and access a required academic resource after opening the platform.
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Target:} The platform should allow a student to reach a relevant resource through structured navigation within a short interaction sequence.
+    \item \textbf{Attribution:} The process can be evaluated through controlled user tasks and application-level timestamps/logging where applicable.
+\end{itemize}
+
+\subsection{Secondary Evaluation Metrics}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Resource discovery:} Percentage of test users who successfully locate a requested note, book, or PYQ.
+    \item \textbf{Upload success rate:} Percentage of valid resource uploads successfully stored and registered by the system.
+    \item \textbf{API reliability:} Percentage of tested API requests completing successfully without server-side failure.
+    \item \textbf{User clarity:} Student-reported ease of finding and accessing academic material using a simple 1--5 feedback scale.
+    \item \textbf{Authentication reliability:} Successful login/signup rate for valid credentials.
+    \item \textbf{Resource organization:} Percentage of uploaded resources containing the required academic metadata.
+    \item \textbf{Platform availability:} Availability of the frontend and backend during the testing/pilot period.
+\end{itemize}
+
+\subsection{Pilot Validation Plan \dots High-level}
+\begin{enumerate}[leftmargin=*]
+    \item Recruit approximately 10--20 student users for initial testing.
+    \item Provide users with representative tasks such as:
+    \begin{itemize}
+        \item Finding a specific subject's notes
+        \item Accessing a PYQ
+        \item Locating a book
+        \item Uploading a note
+        \item Joining/creating a class
+    \end{itemize}
+    \item Record task completion and failures.
+    \item Collect short user feedback regarding navigation, resource discovery, upload experience, and overall usability.
+    \item Compare the results across iterations and prioritize improvements based on observed problems.
+\end{enumerate}
+
+\section{Scalability \dots With Foresight}
+The platform should scale both theoretically and practically as the number of students and academic resources increases.
+
+\subsection{Scalable Theoretically}
+The system can support increasing numbers of resources and users through:
+\begin{itemize}[leftmargin=*]
+    \item Decoupling the frontend and backend
+    \item Using a relational database for structured data
+    \item Indexing commonly queried fields
+    \item Pagination for large resource lists
+    \item Stateless API design where appropriate
+    \item External object storage for large files
+\end{itemize}
+
+\subsection{Operationally Deployable Practically}
+The platform can be deployed using common web-hosting and managed infrastructure:
+\begin{itemize}[leftmargin=*]
+    \item Managed PostgreSQL database
+    \item Cloud object storage
+    \item Hosted frontend
+    \item Hosted backend/API
+    \item Environment-based configuration
+    \item Git-based version control
+    \item CI/CD pipeline in later iterations
+\end{itemize}
+
+This allows the application to move beyond a local development environment without requiring a complete redesign.
+
+\section{Engine Availability Heuristic}
+A mature ecosystem of tools and services is available to implement the proposed platform:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Frontend framework:} React / TypeScript
+    \item \textbf{Backend framework:} Go with a web/API framework
+    \item \textbf{Relational database:} PostgreSQL
+    \item \textbf{Authentication:} Token/session-based authentication mechanisms
+    \item \textbf{Object storage:} AWS S3 or equivalent cloud storage
+    \item \textbf{HTTP communication:} REST-style API communication between frontend and backend
+    \item \textbf{Version control:} Git and GitHub
+    \item \textbf{Testing:} Frontend and backend testing frameworks can be incorporated as the project matures
+    \item \textbf{Deployment:} Common cloud hosting and CI/CD services can be used for staging and production
+\end{itemize}
+
+We will use these mature components to focus on collaborative learning workflows, resource organization, correctness, usability, and scalability rather than developing new infrastructure.
+
+\section{Project Scope and Deliverables \dots Iteration-friendly}
+
+\subsection{Initial Deliverable \dots First Iteration}
+The initial working version includes:
+\begin{itemize}[leftmargin=*]
+    \item Student registration and login
+    \item Authenticated student dashboard
+    \item Notes section
+    \item Books section
+    \item PYQ section
+    \item Academic resource categorization
+    \item Resource upload workflow
+    \item Class creation and participation functionality
+    \item Backend API for frontend communication
+    \item PostgreSQL database for structured application data
+    \item Cloud storage integration for uploaded files
+    \item Basic authentication and authorization
+    \item Basic resource status handling
+    \item Working frontend-backend integration
+\end{itemize}
+
+\subsection{Subsequent Deliverables}
+Potential subsequent iterations can include:
+\begin{itemize}[leftmargin=*]
+    \item Improved search and filtering
+    \item Resource ratings and quality indicators
+    \item Comments and discussions on resources
+    \item Notifications for new resources and class activity
+    \item Contributor profiles and contribution statistics
+    \item Administrative moderation dashboard
+    \item Improved resource recommendation
+    \item Analytics for popular subjects and resources
+    \item AI-assisted PDF summarization
+    \item Question answering over uploaded academic material
+    \item Automatic quiz generation from notes
+    \item AI-based academic resource recommendations
+\end{itemize}
+
+These later features can be introduced incrementally without changing the fundamental architecture.
+
+\section{Risks and Mitigations}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Data privacy:} Minimize collection of unnecessary personal information and ensure that authentication and access-controlled operations are properly implemented.
+    \item \textbf{Unauthorized resources:} Introduce resource validation/moderation workflows to reduce the possibility of inappropriate or irrelevant material being published.
+    \item \textbf{Storage dependency:} Use appropriate cloud-storage configuration and maintain clear separation between application metadata and uploaded files.
+    \item \textbf{AWS configuration failures:} Keep cloud credentials and configuration outside source code and use appropriate environment-based configuration.
+    \item \textbf{Large files:} Avoid committing uploaded academic files or dependency directories into the Git repository. Store application dependencies through package manifests and academic uploads through the intended storage system.
+    \item \textbf{User adoption:} Keep resource discovery and upload workflows simple and minimize unnecessary steps.
+    \item \textbf{Data quality:} Require essential metadata such as year, stream, subject code, and resource type before accepting a resource.
+    \item \textbf{Scalability:} Use database indexing, pagination, separated frontend/backend components, and external object storage as resource volume increases.
+    \item \textbf{Operational issues:} Maintain a stable Git version of the working project before introducing experimental modifications.
+\end{itemize}
+
+\section{Summary}
+This project proposes a deployable web-based \textbf{Collaborative Study Platform} designed to reduce the time and effort students spend searching for and sharing academic resources.
+
+The platform combines student authentication, structured academic-resource management, notes, books, previous-year questions, class participation, file uploads, a React frontend, a Go backend, PostgreSQL database storage, and cloud-based file storage.
+
+It meets the course-oriented engineering objective by emphasizing practical workflow design, incremental development, maintainability, measurable evaluation, and scalability readiness rather than research-driven novelty.
+
+The project can initially provide a reliable centralized platform for academic resource sharing and can subsequently evolve toward advanced capabilities such as recommendation systems, analytics, notifications, and AI-assisted learning.
+
+The primary value of the system is therefore not simply providing another LMS, but creating a \textbf{student-driven collaborative academic ecosystem} in which students can both consume and contribute study resources.
+
+\end{document}
