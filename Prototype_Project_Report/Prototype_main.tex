@@ -1,0 +1,80 @@
+% ============================================================
+% Chapter 3 — Progress Evaluation
+% Drop this file's contents into main.tex (e.g. via \input{progress_evaluation}
+% right after Chapter 2 / Section 2.2.1, and before \end{document}).
+% Requires \usepackage{graphicx} in your preamble (main.tex already
+% uses it for the diagrams in Chapter 2).
+%
+% Place the two screenshots in your images/figures folder and update
+% the two \includegraphics paths below to match, e.g.:
+%   diagrams/fig3_1_signin.png
+%   diagrams/fig3_2_dashboard.png
+% ============================================================
+
+\chapter{Progress Evaluation}
+
+\section{Current Status and Validation}
+
+Following the design described in Chapter 2, a working frontend prototype of the
+Collaborative Study Platform has been implemented and deployed locally for testing.
+The prototype validates the User Login use case (UC-01, Table 2.1) and the
+authentication portion of the activity, sequence, and collaboration diagrams in
+Section 2.1.1: a student can register a new account or sign in with existing
+credentials, and on success is taken to a personalised dashboard.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.55\textwidth]{diagrams/fig3_1_signin.png}
+    \caption{Landing / authentication screen of the Collaborative Study Platform
+    prototype, showing the feature highlights alongside the Sign In and Create
+    Account forms.}
+    \label{fig:signin-screen}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.55\textwidth]{diagrams/fig3_2_dashboard.png}
+    \caption{Dashboard displayed immediately after a successful registration,
+    confirming the authentication flow and exposing the Notes, Join/Create Class,
+    Books, and PYQs modules to the user.}
+    \label{fig:dashboard-screen}
+\end{figure}
+
+As shown in Figure~\ref{fig:dashboard-screen}, registration returns a success
+confirmation and routes the user directly to the Dashboard, consistent with the
+post-conditions listed in Table 2.1 and with steps 6--7 of the Sequence Diagram
+in Figure 2.4. The four dashboard cards correspond to the View Notes, View Books,
+View Previous Year Questions, and Join/Create Class use cases identified in the
+UML Use Case Diagram (Figure 2.1).
+
+\section{Analysis of Progress}
+
+Measured against the four project objectives set out in Section 1.2, progress to
+date is as follows:
+
+\begin{itemize}
+    \item \textbf{Centralized resource access (Objective 1):} the Dashboard now
+    exposes Notes, Books, PYQs, and Join/Create Class as distinct modules; the
+    screens are built, and wiring them to live academic-context data is the next
+    step.
+
+    \item \textbf{Secure authentication (Objective 2):} largely complete.
+    Registration and sign-in screens are functional end-to-end against the
+    Go/Gin backend, and a successful sign-up correctly returns a confirmation
+    and redirects to the Dashboard, as captured in Figure~\ref{fig:dashboard-screen}.
+
+    \item \textbf{Academic-context navigation (Objective 3):} the Dashboard and
+    its four resource cards are in place; the classroom $\rightarrow$
+    year/stream $\rightarrow$ subject selection flow from the Swimlane Diagram
+    (Figure 2.3) is designed but not yet connected to these screens.
+
+    \item \textbf{Study-material upload (Objective 4):} not yet started on the
+    frontend; the corresponding backend upload and validation endpoints
+    described in Section 2.1 are planned for the next development cycle.
+\end{itemize}
+
+Overall, the authentication module and the dashboard shell are functionally
+complete and match the UML use case, sequence, and collaboration diagrams
+presented in Chapter 2. The remaining work is concentrated in the
+resource-retrieval and upload modules, both of which are architecturally
+defined but still to be implemented on the frontend.
